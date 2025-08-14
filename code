@@ -1,67 +1,34 @@
-APP_NAME="NIPR Election Portal"
-APP_ENV=local
-APP_KEY=base64:EUlWlUjzakmCE1Rgb0jSC5ILaQ1goQHpKerDX5ENzH0=
-APP_DEBUG=true
-APP_TIMEZONE=UTC
-APP_URL=http://localhost
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <system.webServer>
+    <rewrite>
+      <rules>
+        <!-- Route all requests to index.php except files in /public/build -->
+        <rule name="Laravel" stopProcessing="true">
+          <match url="^(.*)$" ignoreCase="false" />
+          <conditions logicalGrouping="MatchAll">
+            <add input="{REQUEST_FILENAME}" matchType="IsFile" negate="true" />
+            <add input="{REQUEST_FILENAME}" matchType="IsDirectory" negate="true" />
+          </conditions>
+          <action type="Rewrite" url="index.php" appendQueryString="true" />
+        </rule>
+      </rules>
+    </rewrite>
 
-APP_LOCALE=en
-APP_FALLBACK_LOCALE=en
-APP_FAKER_LOCALE=en_US
+    <!-- Allow serving CSS, JS, Fonts -->
+    <staticContent>
+      <mimeMap fileExtension=".css" mimeType="text/css" />
+      <mimeMap fileExtension=".js" mimeType="application/javascript" />
+      <mimeMap fileExtension=".woff" mimeType="font/woff" />
+      <mimeMap fileExtension=".woff2" mimeType="font/woff2" />
+      <mimeMap fileExtension=".ttf" mimeType="application/x-font-ttf" />
+    </staticContent>
 
-APP_MAINTENANCE_DRIVER=file
-# APP_MAINTENANCE_STORE=database
-
-PHP_CLI_SERVER_WORKERS=4
-
-BCRYPT_ROUNDS=12
-
-LOG_CHANNEL=stack
-LOG_STACK=single
-LOG_DEPRECATIONS_CHANNEL=null
-LOG_LEVEL=debug
-
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=nipr_election_portal
-DB_USERNAME=root
-DB_PASSWORD=By/21c/0633
-
-SESSION_DRIVER=database
-SESSION_LIFETIME=120
-SESSION_ENCRYPT=false
-SESSION_PATH=/
-SESSION_DOMAIN=null
-
-BROADCAST_CONNECTION=log
-FILESYSTEM_DISK=local
-QUEUE_CONNECTION=database
-
-CACHE_STORE=database
-CACHE_PREFIX=
-
-MEMCACHED_HOST=127.0.0.1
-
-REDIS_CLIENT=phpredis
-REDIS_HOST=127.0.0.1
-REDIS_PASSWORD=null
-REDIS_PORT=6379
-
-MAIL_MAILER=smtp
-MAIL_HOST=mail.niprng.org.ng
-MAIL_PORT=465
-MAIL_USERNAME=f.kater@niprng.org.ng
-MAIL_PASSWORD=By/21c/0633
-MAIL_ENCRYPTION=ssl
-MAIL_FROM_ADDRESS="noreply@niprng.org.ng"
-MAIL_FROM_NAME="NIPR Election Team"
-
-AWS_ACCESS_KEY_ID=
-AWS_SECRET_ACCESS_KEY=
-AWS_DEFAULT_REGION=us-east-1
-AWS_BUCKET=
-AWS_USE_PATH_STYLE_ENDPOINT=false
-
-VITE_APP_NAME="${APP_NAME}"
-
+    <!-- Enable default document -->
+    <defaultDocument>
+      <files>
+        <add value="index.php" />
+      </files>
+    </defaultDocument>
+  </system.webServer>
+</configuration>
